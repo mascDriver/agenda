@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import br.com.twa.agenda.R;
+import br.com.twa.agenda.dao.AlunoDAO;
 
 public class ListaAlunosActivity extends AppCompatActivity {
     @Override
@@ -19,12 +20,16 @@ public class ListaAlunosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_alunos);
         setTitle("Lista de Alunos");
+
+        AlunoDAO dao = new AlunoDAO();
+
+
         List<String> alunos = new ArrayList<>(Arrays.asList("Alex", "Fran", "Diogo"));
         ListView listaDeAlunos = findViewById(R.id.activity_lista_de_alunos_listview);
         listaDeAlunos.setAdapter(
                 new ArrayAdapter<>(
                         this,
-                        android.R.layout.simple_list_item_1, alunos
+                        android.R.layout.simple_list_item_1, dao.todos()
                 )
         );
     }
