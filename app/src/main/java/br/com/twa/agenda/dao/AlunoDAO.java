@@ -1,5 +1,7 @@
 package br.com.twa.agenda.dao;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +16,23 @@ public class AlunoDAO {
     public void salva(Aluno aluno) {
         aluno.setId(contadorDeIds);
         alunos.add(aluno);
+        atualizaIds();
+    }
+
+    private void atualizaIds() {
         contadorDeIds++;
     }
 
     public void edita(Aluno aluno) {
+        Aluno alunoEncontrado = buscaAlunoPeloId(aluno);
+        if (alunoEncontrado != null) {
+            int posicaoDoAluno = alunos.indexOf(alunoEncontrado);
+            alunos.set(posicaoDoAluno, aluno);
+        }
+    }
+
+    @Nullable
+    private Aluno buscaAlunoPeloId(Aluno aluno) {
         Aluno alunoEncontrado = null;
         for (Aluno a :
                 alunos) {
@@ -25,10 +40,7 @@ public class AlunoDAO {
                 alunoEncontrado = a;
             }
         }
-        if (alunoEncontrado != null) {
-            int posicaoDoAluno = alunos.indexOf(alunoEncontrado);
-            alunos.set(posicaoDoAluno, aluno);
-        }
+        return alunoEncontrado;
     }
 
     public List<Aluno> todos() {
